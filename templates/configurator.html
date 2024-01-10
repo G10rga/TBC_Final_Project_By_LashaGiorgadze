@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block title %}Configurator{% endblock %}
+
+{% include 'navbar.html' %}
+{% block content %}
+
+<body>
+    <div class="container mt-5">
+        <h2>PC Configurator</h2>
+        <form action="/configure" method="post" id="pcConfigForm">
+            <div class="row">
+                <!-- First Line -->
+                <div class="col-md-4">
+                    <!-- CPU Selection -->
+                    <label for="cpu">CPU:</label>
+                    <select id="cpu" name="cpu" required>
+                        <option value="none">None</option>
+                        {% for item in items %}
+                        {% if item['category'] == 'CPU' %}
+                        <option value="{{ item['id'] }}">{{ item['name'] }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <!-- Motherboard Selection -->
+                    <label for="motherboard">Motherboard:</label>
+                    <select id="motherboard" name="motherboard" required>
+                        <option value="none">None</option>
+                        {% for item in items %}
+                        {% if item['category'] == 'Motherboard' %}
+                        <option value="{{ item['id'] }}">{{ item['name'] }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <!-- RAM Selection -->
+                    <label for="ram">RAM:</label>
+                    <select id="ram" name="ram" required>
+                        <option value="none">None</option>
+                        {% for item in items %}
+                        {% if item['category'] == 'RAM' %}
+                        <option value="{{ item['id'] }}">{{ item['name'] }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <!-- Second Line -->
+                <div class="col-md-4">
+                    <!-- GPU Selection -->
+                    <label for="gpu">GPU:</label>
+                    <select id="gpu" name="gpu" required>
+                        <option value="none">None</option>
+                        {% for item in items %}
+                        {% if item['category'] == 'GPU' %}
+                        <option value="{{ item['id'] }}">{{ item['name'] }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <!-- PSU Selection -->
+                    <label for="psu">Power Supply (PSU):</label>
+                    <select id="psu" name="psu" required>
+                        <option value="none">None</option>
+                        {% for item in items %}
+                        {% if item['category'] == 'PSU' %}
+                        <option value="{{ item['id'] }}">{{ item['name'] }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <!-- Storage Selection -->
+                    <label for="hdd">HDD:</label>
+                    <select id="hdd" name="hdd" required>
+                        <option value="none">None</option>
+                        {% for item in items %}
+                        {% if item['category'] == 'HDD' %}
+                        <option value="{{ item['id'] }}">{{ item['name'] }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <!-- Third Line -->
+                <div class="col-md-4">
+                    <label for="ssd">SSD:</label>
+                    <select id="ssd" name="ssd" required>
+                        <option value="none">None</option>
+                        {% for item in items %}
+                        {% if item['category'] == 'SSD' %}
+                        <option value="{{ item['id'] }}">{{ item['name'] }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <!-- Case Selection -->
+                    <label for="case">PC Case:</label>
+                    <select id="case" name="case" required>
+                        <option value="none">None</option>
+                        {% for item in items %}
+                        {% if item['category'] == 'Case' %}
+                        <option value="{{ item['id'] }}">{{ item['name'] }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary mt-3" id="submitBtn">Submit Configuration</button>
+        </form>
+    </div>
+
+    <!-- Error alert -->
+    <div class="alert alert-danger mt-3" role="alert" id="errorAlert" style="display: none;">
+        Please select options for all components.
+    </div>
+
+    <!-- Success alert -->
+    <div class="alert alert-success mt-3" role="alert" id="successAlert" style="display: none;">
+        Configuration submitted successfully!
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBud7/gF1MkL7X+E2Zl92w2yTmYFgK0pGkMkQsUwq0eU=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+    <!-- Custom script for form submission -->
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function () {
+            var isValid = true;
+
+            // Check if any option is not selected
+            document.querySelectorAll('select[required]').forEach(function (select) {
+                if (select.value === 'none') {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                // Display error alert
+                document.getElementById('errorAlert').style.display = 'block';
+                return;
+            }
+
+            // Hide error alert if displayed
+            document.getElementById('errorAlert').style.display = 'none';
+
+            // Display success alert
+            document.getElementById('successAlert').style.display = 'block';
+        });
+    </script>
+{% endblock %}

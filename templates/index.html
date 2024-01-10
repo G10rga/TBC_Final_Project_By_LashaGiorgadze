@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}G1orga{% endblock %}
+
+{% include 'navbar.html' %}
+
+{% block hero %}
+    <h1>Welcome to our website</h1>
+    <p>This is the homepage of our website.</p>
+<a href="about" class="btn btn-primary">Learn More</a>{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Featured Products</h2>
+    <div class="row">
+        {% for item in items[:3] %}
+        <div class="col-md-4 mb-4">
+            <a href="/item/{{ item['id'] }}" class="card-link">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/' + item['img']) }}" class="card-img-top" alt="{{ item['name'] }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item['name'] }}</h5>
+                        <p class="card-text">Price: {{ item['price'] }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Item Detail - {{ item.name }}{% endblock %}
+
+{% include 'navbar.html' %}
+{% block content %}
+   <div class="container">
+      <h1>{{ item.name }} Details</h1>
+      <div class="row">
+         <div class="col-md-6">
+            <img src="{{ url_for('static', filename='images/' + item.img) }}" alt="{{ item.name }}" class="img-fluid">
+         </div>
+         <div class="col-md-6">
+            <p><strong>Category:</strong> {{ item.category }}</p>
+            <p><strong>Price:</strong> {{ item.price }}</p>
+            <!-- Additional item details as needed -->
+         </div>
+      </div>
+   </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - My Website{% endblock %}
+
+{% include 'navbar.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Store</title>
+
+
+    <style>
+        body {
+            background-image: url('/static/images/background4.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+         }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.5); /* Adjust the alpha value as needed */
+        }
+
+    </style>
+
+<div class="container">
+        <h1>Our Store</h1>
+
+        <div class="row">
+            {% for item in items %}
+            <div class="col-md-4 mb-4">
+            <a href="{{ url_for('item_details', item_id=item.id) }}" class="card-link">
+                    <div class="card">
+                        <img src="{{ url_for('static', filename='images/' + item['img']) }}" class="card-img-top" alt="{{ item['name'] }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item['name'] }}</h5>
+                            <p class="card-text">Price: {{ item['price'] }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}
